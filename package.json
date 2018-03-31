@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "hardyhar": "git+ssh://git@github.com/kong/hardyhar.git",
+    "hardyhar": "git+ssh://git@github.com/kong/hardyhar.git#1355244544f66ef01886b5b48dc41b5827ee4473",
     "prismjs": "^1.13.0",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
@@ -33,6 +33,7 @@
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-filesize": "^1.5.0",
     "rollup-plugin-node-resolve": "^3.3.0"
   }
 }

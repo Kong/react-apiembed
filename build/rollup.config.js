@@ -1,6 +1,7 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
+import filesize from 'rollup-plugin-filesize'
 
 export default {
   input: 'src/index.js',
@@ -21,6 +22,7 @@ export default {
     'prop-types'
   ],
   plugins: [
+    filesize(),
     resolve({
       browser: true,
       preferBuiltins: false
@@ -29,6 +31,7 @@ export default {
       include: 'node_modules/**'
     }),
     babel({
+      plugins: ['external-helpers'],
       exclude: 'node_modules/**'
     })
   ]
