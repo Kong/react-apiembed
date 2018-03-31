@@ -1,3 +1,4 @@
 import CodeSnippet from './CodeSnippet';
+import CodeSnippetWidget from './CodeSnippetWidget';
 
-export default { CodeSnippet };
+export default { CodeSnippet, CodeSnippetWidget };
