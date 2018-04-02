@@ -3100,9 +3100,9 @@ har-validator@~5.0.3:
     ajv "^5.1.0"
     har-schema "^2.0.0"
 
-"hardyhar@git+ssh://git@github.com/kong/hardyhar.git#1355244544f66ef01886b5b48dc41b5827ee4473":
+hardyhar@^0.1.0:
   version "0.1.0"
-  resolved "git+ssh://git@github.com/kong/hardyhar.git#1355244544f66ef01886b5b48dc41b5827ee4473"
+  resolved "https://registry.yarnpkg.com/hardyhar/-/hardyhar-0.1.0.tgz#1e77b721f1e8e98f37ca2f683b4a1117fd143001"
 
 has-ansi@^2.0.0:
   version "2.0.0"
