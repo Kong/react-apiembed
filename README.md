@@ -65,14 +65,15 @@ export default class MyApp extends React.Component {
 | Name    | Required | Type   | Description                                                                                    |
 | :------ | :------: | :----- | :--------------------------------------------------------------------------------------------- |
 | har     |    ✔     | Object | HAR Request object as outlined [here](http://www.softwareishard.com/blog/har-12-spec/#request) |
-| snippet |    ✔     | Object | Snippet object with `prismLanguage`, and [hardyhar][hardyhar] `target` and `client`              |
+| snippet |    ✔     | Object | Snippet object with `prismLanguage`, and [hardyhar][hardyhar] `target` and `client`            |
 
 `snippet` properties
-|Name|Required|Default|Type|Description|
-|:------|:------:|:------|:------|:------|
-|prismLanguage |✔ ||String| Prism languages. Currently supports: `bash`, `javascript`, `php`, `go`, `ruby`, `ocaml`, `ruby`, `java`, `python`, `swift`, `csharp`, `clike`
-|target |✔ ||String | [hardyhar][hardyhar] `target` prop e.g. "node", "javascript", "shell", "go" etc.
-|client | |`null`|String | [hardyhar][hardyhar] `client` prop. e.g. "xhr", "curl" etc.
+
+| Name          | Required | Default | Type   | Description                                                                                                                                   |
+| :------------ | :------: | :------ | :----- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
+| prismLanguage |    ✔     |         | String | Prism languages. Currently supports: `bash`, `javascript`, `php`, `go`, `ruby`, `ocaml`, `ruby`, `java`, `python`, `swift`, `csharp`, `clike` |
+| target        |    ✔     |         | String | [hardyhar][hardyhar] `target` prop e.g. "node", "javascript", "shell", "go" etc.                                                              |
+| client        |          | `null`  | String | [hardyhar][hardyhar] `client` prop. e.g. "xhr", "curl" etc.                                                                                   |
 
 ### `<CodeSnippetWidget/>`
 
