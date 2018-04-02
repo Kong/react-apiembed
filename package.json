@@ -5,7 +5,7 @@
   "main": "dist/react-apiembed.js",
   "author": "Darren Jennings",
   "license": "MIT",
-  "private": true,
+  "repository": "https://github.com/kong/react-apiembed",
   "scripts": {
     "start": "npm run storybook",
     "test": "echo \"Error: no tests \" && exit 1",
