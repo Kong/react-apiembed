@@ -27,60 +27,75 @@ npm install
 Using as a ES module:
 
 ```jsx
-import React from 'react';
-import { render } from 'react-dom';
-import { CodeSnippet, CodeSnippetWidget } from 'react-apiembed';
+import React from "react"
+import { render } from "react-dom"
+import { CodeSnippet, CodeSnippetWidget } from "react-apiembed"
 
-export default class MyApp extends React.Component {
-
-  render(){
-    const har = { "method": "POST", "url": "http://mockbin.com/request", "httpVersion": "HTTP/1.1", "queryString": [ { "name": "foo", "value": "bar" }, { "name": "foo", "value": "baz" } ], "headers": [ { "name": "Accept", "value": "application/json" }, { "name": "Content-Type", "value": "application/json" } ], "cookies": [ { "name": "foo", "value": "bar" }, { "name": "bar", "value": "baz" } ], "postData": { "mimeType": "application/json", "text": "{\"foo\": \"bar\"}" } }
-
-    const snippets = {[
-      {
-        prismLanguage: "javascript",
-        target: "javascript",
-        client: "jquery"
-      },
-      {
-        prismLanguage: "clike",
-        target: "c"
-      },
-    ]}
+class MyApp extends React.Component {
+  render() {
+    const har = {
+      method: "POST",
+      url: "http://mockbin.com/request",
+      httpVersion: "HTTP/1.1",
+      queryString: [{ name: "foo", value: "bar" }, { name: "foo", value: "baz" }],
+      headers: [
+        { name: "Accept", value: "application/json" },
+        { name: "Content-Type", value: "application/json" }
+      ],
+      cookies: [{ name: "foo", value: "bar" }, { name: "bar", value: "baz" }],
+      postData: { mimeType: "application/json", text: '{"foo": "bar"}' }
+    }
 
     return (
       <div>
-        <CodeSnippet har={har} snippet={snippets[0]} />
-        <CodeSnippetWidget har={har} snippets={snippets} />
+        <CodeSnippet har={har} prismLanguage="javascript" target="javascript" client="jquery" />
+        <CodeSnippetWidget
+          har={har}
+          snippets={[
+            {
+              prismLanguage: "go",
+              target: "go"
+            },
+            {
+              prismLanguage: "bash",
+              target: "shell",
+              client: "curl"
+            }
+          ]}
+        />
       </div>
     )
   }
 }
+
+render(<MyApp />, document.getElementById("root"))
 ```
 
 ## Props
 
 ### `<CodeSnippet/>`
 
-| Name    | Required | Type   | Description                                                                                    |
-| :------ | :------: | :----- | :--------------------------------------------------------------------------------------------- |
-| har     |    ✔     | Object | HAR Request object as outlined [here](http://www.softwareishard.com/blog/har-12-spec/#request) |
-| snippet |    ✔     | Object | Snippet object with `prismLanguage`, and [hardyhar][hardyhar] `target` and `client`            |
-
-`snippet` properties
-
-| Name          | Required | Default | Type   | Description                                                                                                                                   |
-| :------------ | :------: | :------ | :----- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
-| prismLanguage |    ✔     |         | String | Prism languages. Currently supports: `bash`, `javascript`, `php`, `go`, `ruby`, `ocaml`, `ruby`, `java`, `python`, `swift`, `csharp`, `clike` |
-| target        |    ✔     |         | String | [hardyhar][hardyhar] `target` prop e.g. "node", "javascript", "shell", "go" etc.                                                              |
-| client        |          | `null`  | String | [hardyhar][hardyhar] `client` prop. e.g. "xhr", "curl" etc.                                                                                   |
+| Name          | Required | Default | Type   | Description|
+| :------------ | :------: | :------ | :----- | :-----|
+| har           |    ✔     |         | Object | HAR Request object as outlined [here](http://www.softwareishard.com/blog/har-12-spec/#request)|
+| prismLanguage |    ✔     |         | String | Prism languages. Currently supports: `bash`, `javascript`, `php`, `go`, `ruby`, `ocaml`, `ruby`, `java`, `python`, `swift`, `csharp`, `clike`|
+| target        |    ✔     |         | String | [hardyhar][hardyhar] `target` prop e.g. "node", "javascript", "shell", "go" etc.|
+| client        |          | `null`  | String | [hardyhar][hardyhar] `client` prop. e.g. "xhr", "curl" etc.|
 
 ### `<CodeSnippetWidget/>`
 
 | Name     | Required | Type   | Description                                                                                    |
 | :------- | :------: | :----- | :--------------------------------------------------------------------------------------------- |
 | har      |    ✔     | Object | HAR Request object as outlined [here](http://www.softwareishard.com/blog/har-12-spec/#request) |
-| snippets |    ✔     | Object | Array of snippet props                                                                         |
+| snippets |    ✔     | Object | Array of snippet objects                                                                       |
+
+`snippet` properties
+
+| Name          | Required | Default | Type   | Description                                                                      |
+| :------------ | :------: | :------ | :----- | :------------------------------------------------------------------------------- |
+| prismLanguage |    ✔     |         | String | Prism languages. See above for supported languages.                              |
+| target        |    ✔     |         | String | [hardyhar][hardyhar] `target` prop e.g. "node", "javascript", "shell", "go" etc. |
+| client        |          | `null`  | String | [hardyhar][hardyhar] `client` prop. e.g. "xhr", "curl" etc.                      |
 
 ## Testing
 
