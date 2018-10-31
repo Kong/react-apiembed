@@ -972,18 +972,12 @@
 
 	  function CodeSnippet(props) {
 	    classCallCheck(this, CodeSnippet);
-
-	    var _this = possibleConstructorReturn(this, (CodeSnippet.__proto__ || Object.getPrototypeOf(CodeSnippet)).call(this, props));
-
-	    _this.state = {
-	      codeHTML: { __html: "" }
-	    };
-	    return _this;
+	    return possibleConstructorReturn(this, (CodeSnippet.__proto__ || Object.getPrototypeOf(CodeSnippet)).call(this, props));
 	  }
 
 	  createClass(CodeSnippet, [{
-	    key: "componentDidMount",
-	    value: function componentDidMount() {
+	    key: "render",
+	    value: function render() {
 	      var _props = this.props,
 	          har = _props.har,
 	          target = _props.target,
@@ -999,19 +993,12 @@
 	        __html: prism.highlight(code, prism.languages[prismLanguage], prismLanguage)
 	      };
 
-	      this.setState(_extends({}, this.state, {
-	        codeHTML: codeHTML
-	      }));
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
 	      return React.createElement(
 	        "pre",
 	        { className: "language-" + this.props.prismLanguage },
 	        React.createElement("code", {
 	          className: "language-" + this.props.prismLanguage,
-	          dangerouslySetInnerHTML: this.state.codeHTML
+	          dangerouslySetInnerHTML: codeHTML
 	        })
 	      );
 	    }

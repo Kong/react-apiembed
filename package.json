@@ -1,7 +1,10 @@
 {
   "name": "react-apiembed",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React api embed component.",
+  "files": [
+    "dist"
+  ],
   "main": "dist/react-apiembed.js",
   "author": "Darren Jennings",
   "license": "MIT",
