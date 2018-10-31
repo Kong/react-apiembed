@@ -19,17 +19,12 @@ import "prismjs/components/prism-python.min"
 import "prismjs/components/prism-swift.min"
 import "prismjs/components/prism-csharp.min"
 
-
-
 export default class CodeSnippet extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      codeHTML: { __html: "" }
-    }
   }
 
-  componentDidMount() {
+  render() {
     let { har, target, client, prismLanguage } = this.props
     // loadLanguages([prismLanguage])
 
@@ -41,18 +36,11 @@ export default class CodeSnippet extends React.Component {
       __html: Prism.highlight(code, Prism.languages[prismLanguage], prismLanguage)
     }
 
-    this.setState({
-      ...this.state,
-      codeHTML
-    })
-  }
-
-  render() {
     return (
       <pre className={`language-${this.props.prismLanguage}`}>
         <code
           className={`language-${this.props.prismLanguage}`}
-          dangerouslySetInnerHTML={this.state.codeHTML}
+          dangerouslySetInnerHTML={codeHTML}
         />
       </pre>
     )
