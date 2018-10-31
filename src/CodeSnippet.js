@@ -19,8 +19,6 @@ import "prismjs/components/prism-python.min"
 import "prismjs/components/prism-swift.min"
 import "prismjs/components/prism-csharp.min"
 
-
-
 export default class CodeSnippet extends React.Component {
   constructor(props) {
     super(props)
@@ -30,7 +28,15 @@ export default class CodeSnippet extends React.Component {
   }
 
   componentDidMount() {
-    let { har, target, client, prismLanguage } = this.props
+    this.formatHTML(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.formatHTML(nextProps)
+  }
+
+  formatHTML(props) {
+    let { har, target, client, prismLanguage } = props
     // loadLanguages([prismLanguage])
 
     // TODO: httpsnippet should expose isLanguageSupported() method
