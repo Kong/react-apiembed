@@ -22,21 +22,10 @@ import "prismjs/components/prism-csharp.min"
 export default class CodeSnippet extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      codeHTML: { __html: "" }
-    }
   }
 
-  componentDidMount() {
-    this.formatHTML(this.props)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.formatHTML(nextProps)
-  }
-
-  formatHTML(props) {
-    let { har, target, client, prismLanguage } = props
+  render() {
+    let { har, target, client, prismLanguage } = this.props
     // loadLanguages([prismLanguage])
 
     // TODO: httpsnippet should expose isLanguageSupported() method
@@ -47,18 +36,11 @@ export default class CodeSnippet extends React.Component {
       __html: Prism.highlight(code, Prism.languages[prismLanguage], prismLanguage)
     }
 
-    this.setState({
-      ...this.state,
-      codeHTML
-    })
-  }
-
-  render() {
     return (
       <pre className={`language-${this.props.prismLanguage}`}>
         <code
           className={`language-${this.props.prismLanguage}`}
-          dangerouslySetInnerHTML={this.state.codeHTML}
+          dangerouslySetInnerHTML={codeHTML}
         />
       </pre>
     )
