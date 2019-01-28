@@ -1,5 +1,7 @@
 # react-apiembed
 
+[![version][version-badge]][package]
+
 React components encapsulating functionality of [apiembed](apiembed.com). Allows you to generate code snippets from HARs, all in the browser, with the power of react. [Examples](https://kong.github.io/react-apiembed)
 
 Built with:
@@ -105,3 +107,7 @@ npm run test
 
 [prismjs]: http://prismjs.com/
 [hardyhar]: https://github.com/kong/hardyhar
+
+[version-badge]: https://img.shields.io/npm/v/react-apiembed.svg?style=flat-square
+[package]: https://www.npmjs.com/package/react-apiembed
+[license-badge]: https://img.shields.io/npm/l/react-apiembed.svg?style=flat-square
