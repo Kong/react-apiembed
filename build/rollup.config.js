@@ -1,7 +1,8 @@
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import babel from 'rollup-plugin-babel';
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import babel from '@rollup/plugin-babel'
 import filesize from 'rollup-plugin-filesize'
+
 
 export default {
   input: 'src/index.js',
@@ -31,7 +32,8 @@ export default {
       include: 'node_modules/**'
     }),
     babel({
-      plugins: ['external-helpers'],
+      babelHelpers : 'external',
+      plugins: ['@babel/plugin-external-helpers'],
       exclude: 'node_modules/**'
     })
   ]
