@@ -7,7 +7,7 @@ React components encapsulating functionality of [apiembed](apiembed.com). Allows
 Built with:
 
 * [react](https://reactjs.org/)
-* [hardyhar][hardyhar] - Transform HAR request object to beautiful code snippets. Core lib behind [HTTPSnippet](https://github.com/kong/httpsnippet) cli.
+* [httpsnippet][httpsnippet](https://github.com/kong/httpsnippet)
 * [prismjs][prismjs] - Prism is a lightweight, extensible syntax highlighter.
 
 React components included
@@ -81,8 +81,8 @@ render(<MyApp />, document.getElementById("root"))
 | :------------ | :------: | :------ | :----- | :-----|
 | har           |    ✔     |         | Object | HAR Request object as outlined [here](http://www.softwareishard.com/blog/har-12-spec/#request)|
 | prismLanguage |    ✔     |         | String | Prism languages. Currently supports: `bash`, `javascript`, `php`, `go`, `ruby`, `ocaml`, `ruby`, `java`, `python`, `swift`, `csharp`, `clike`|
-| target        |    ✔     |         | String | [hardyhar][hardyhar] `target` prop e.g. "node", "javascript", "shell", "go" etc.|
-| client        |          | `null`  | String | [hardyhar][hardyhar] `client` prop. e.g. "xhr", "curl" etc.|
+| target        |    ✔     |         | String | [httpsnippet][httpsnippet] `target` prop e.g. "node", "javascript", "shell", "go" etc.|
+| client        |          | `null`  | String | [httpsnippet][httpsnippet] `client` prop. e.g. "xhr", "curl" etc.|
 
 ### `<CodeSnippetWidget/>`
 
@@ -96,8 +96,8 @@ render(<MyApp />, document.getElementById("root"))
 | Name          | Required | Default | Type   | Description                                                                      |
 | :------------ | :------: | :------ | :----- | :------------------------------------------------------------------------------- |
 | prismLanguage |    ✔     |         | String | Prism languages. See above for supported languages.                              |
-| target        |    ✔     |         | String | [hardyhar][hardyhar] `target` prop e.g. "node", "javascript", "shell", "go" etc. |
-| client        |          | `null`  | String | [hardyhar][hardyhar] `client` prop. e.g. "xhr", "curl" etc.                      |
+| target        |    ✔     |         | String | [httpsnippet][httpsnippet] `target` prop e.g. "node", "javascript", "shell", "go" etc. |
+| client        |          | `null`  | String | [httpsnippet][httpsnippet] `client` prop. e.g. "xhr", "curl" etc.                      |
 
 ## Testing
 
@@ -106,7 +106,7 @@ npm run test
 ```
 
 [prismjs]: http://prismjs.com/
-[hardyhar]: https://github.com/kong/hardyhar
+[httpsnippet]: https://github.com/kong/httpsnippet
 
 [version-badge]: https://img.shields.io/npm/v/react-apiembed.svg?style=flat-square
 [package]: https://www.npmjs.com/package/react-apiembed
