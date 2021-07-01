@@ -12,14 +12,16 @@ export default {
     globals: {
       react: 'React',
       'react-dom': 'ReactDOM',
-      'prop-types': 'PropTypes'
+      'prop-types': 'PropTypes',
+      'httpsnippet': 'HTTPSnippet'
     }
   },
   // All the used libs needs to be here
   external: [
     'react',
     'react-dom',
-    'prop-types'
+    'prop-types',
+    'httpsnippet',
   ],
   plugins: [
     filesize(),
