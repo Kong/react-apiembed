@@ -1,6 +1,6 @@
 {
   "name": "react-apiembed",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "React api embed component.",
   "files": [
     "dist"
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "hardyhar": "^0.1.0",
+    "httpsnippet": "^2.0.0",
     "prismjs": "^1.13.0",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",

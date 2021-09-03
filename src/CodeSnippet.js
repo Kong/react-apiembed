@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import hardyHAR from 'hardyhar'
 import Prism from "prismjs"
+import HTTPSnippet from 'httpsnippet'
 
 /**
  * Importing manually since prism method loadlanguages is a dynamic import
@@ -31,7 +31,7 @@ export default class CodeSnippet extends React.Component {
     // TODO: httpsnippet should expose isLanguageSupported() method
     // TODO: httpsnippet and prism should have mappings for single language prop
 
-    const code = new hardyHAR(har).convert(target, client)
+    const code = new HTTPSnippet(har).convert(target, client)
     const codeHTML = {
       __html: Prism.highlight(code, Prism.languages[prismLanguage], prismLanguage)
     }
