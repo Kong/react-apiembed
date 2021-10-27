@@ -44,7 +44,7 @@ export default class CodeSnippetWidget extends React.Component {
                   key={index}
                 >
                   <a
-                    aria-controls={`#${key}`}
+                    aria-controls={`${key}`}
                     aria-selected="true"
                     role="tab"
                     className="tabs-component-tab-a"
@@ -60,13 +60,12 @@ export default class CodeSnippetWidget extends React.Component {
           </ul>
           <div className="tabs-component-panels">
             {this.props.snippets
-              .filter((snippet, index) => {
-                return index == this.state.active
-              })
-              .map(snippet => {
+              .map((snippet, index) => {
+
+                const activeTab = index == this.state.active;
                 const key = this.getSnippetKey(snippet)
                 return (
-                  <section role="tabpanel" id={`#${key}`} key={`#${key}`}>
+                  <section hidden={!activeTab} role="tabpanel" id={`${key}`} key={`#${key}`}>
                     <CodeSnippet har={this.props.har} {...snippet} />
                   </section>
                 )
