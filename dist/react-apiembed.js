@@ -1060,7 +1060,7 @@
 	                React.createElement(
 	                  "a",
 	                  {
-	                    "aria-controls": "#" + key,
+	                    "aria-controls": "" + key,
 	                    "aria-selected": "true",
 	                    role: "tab",
 	                    className: "tabs-component-tab-a",
@@ -1076,13 +1076,13 @@
 	          React.createElement(
 	            "div",
 	            { className: "tabs-component-panels" },
-	            this.props.snippets.filter(function (snippet, index) {
-	              return index == _this2.state.active;
-	            }).map(function (snippet) {
+	            this.props.snippets.map(function (snippet, index) {
+
+	              var activeTab = index == _this2.state.active;
 	              var key = _this2.getSnippetKey(snippet);
 	              return React.createElement(
 	                "section",
-	                { role: "tabpanel", id: "#" + key, key: "#" + key },
+	                { hidden: !activeTab, role: "tabpanel", id: "" + key, key: "#" + key },
 	                React.createElement(CodeSnippet, _extends({ har: _this2.props.har }, snippet))
 	              );
 	            })
