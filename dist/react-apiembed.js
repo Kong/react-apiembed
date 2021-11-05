@@ -1015,21 +1015,28 @@
 
 	    _this.clickHandler = _this.clickHandler.bind(_this);
 	    _this.state = {
-	      active: 0
+	      activeTab: 0,
+	      active: props.har.method + props.har.url + 0
 	    };
 	    return _this;
 	  }
 
 	  createClass(CodeSnippetWidget, [{
+	    key: "componentDidUpdate",
+	    value: function componentDidUpdate(prevProps) {
+	      if (prevProps.har.url !== this.props.har.url) {
+	        this.setState({ active: this.props.har.method + this.props.har.url + this.state.activeTab });
+	      }
+	    }
+	  }, {
 	    key: "getSnippetKey",
 	    value: function getSnippetKey(snippet) {
 	      return "" + snippet.target + (snippet.client ? "-" + snippet.client : "");
 	    }
 	  }, {
 	    key: "clickHandler",
-	    value: function clickHandler(e) {
-	      e.preventDefault();
-	      this.setState({ active: e.target.id });
+	    value: function clickHandler(index) {
+	      this.setState({ active: this.props.har.method + this.props.har.url + index, activeTab: index });
 	    }
 	  }, {
 	    key: "render",
@@ -1038,6 +1045,8 @@
 
 	      var har = this.props.har;
 
+
+	      var uniqueId = har.method + har.url;
 
 	      return React.createElement(
 	        "div",
@@ -1054,19 +1063,21 @@
 	                "li",
 	                {
 	                  role: "presentation",
-	                  className: "tabs-component-tab" + (index == _this2.state.active ? " is-active" : ""),
+	                  className: "tabs-component-tab" + (uniqueId + index == _this2.state.active ? " is-active" : ""),
 	                  key: index
 	                },
 	                React.createElement(
 	                  "a",
 	                  {
-	                    "aria-controls": "" + key,
+	                    "aria-controls": "" + (key + uniqueId),
 	                    "aria-selected": "true",
 	                    role: "tab",
 	                    className: "tabs-component-tab-a",
-	                    id: index,
-	                    href: "#" + key,
-	                    onClick: _this2.clickHandler
+	                    id: uniqueId + index,
+	                    href: "#" + (key + uniqueId),
+	                    onClick: function onClick() {
+	                      return _this2.clickHandler(index);
+	                    }
 	                  },
 	                  snippet.target
 	                )
@@ -1077,13 +1088,12 @@
 	            "div",
 	            { className: "tabs-component-panels" },
 	            this.props.snippets.map(function (snippet, index) {
-
-	              var activeTab = index == _this2.state.active;
+	              var activeTab = uniqueId + index == _this2.state.active;
 	              var key = _this2.getSnippetKey(snippet);
 	              return React.createElement(
 	                "section",
-	                { hidden: !activeTab, role: "tabpanel", id: "" + key, key: "#" + key },
-	                React.createElement(CodeSnippet, _extends({ har: _this2.props.har }, snippet))
+	                { hidden: !activeTab, role: "tabpanel", id: "" + (key + uniqueId), key: index },
+	                React.createElement(CodeSnippet, _extends({ har: har }, snippet))
 	              );
 	            })
 	          )

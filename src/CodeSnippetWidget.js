@@ -13,7 +13,14 @@ export default class CodeSnippetWidget extends React.Component {
     super(props)
     this.clickHandler = this.clickHandler.bind(this)
     this.state = {
-      active: 0
+      activeTab: 0,
+      active: props.har.method + props.har.url + 0
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.har.url !== this.props.har.url) {
+      this.setState({ active: this.props.har.method + this.props.har.url + this.state.activeTab})
     }
   }
 
@@ -21,13 +28,14 @@ export default class CodeSnippetWidget extends React.Component {
     return `${snippet.target}${snippet.client ? `-${snippet.client}` : ""}`
   }
 
-  clickHandler(e) {
-    e.preventDefault()
-    this.setState({ active: e.target.id })
+  clickHandler(index) {
+    this.setState({ active: this.props.har.method + this.props.har.url + index, activeTab: index })
   }
 
   render() {
     const { har } = this.props
+
+    const uniqueId = har.method + har.url
 
     return (
       <div className="tabs-component">
@@ -39,18 +47,18 @@ export default class CodeSnippetWidget extends React.Component {
                 <li
                   role="presentation"
                   className={
-                    "tabs-component-tab" + (index == this.state.active ? " is-active" : "")
+                    "tabs-component-tab" + ((uniqueId + index) == this.state.active ? " is-active" : "")
                   }
                   key={index}
                 >
                   <a
-                    aria-controls={`${key}`}
+                    aria-controls={`${key + uniqueId}`}
                     aria-selected="true"
                     role="tab"
                     className="tabs-component-tab-a"
-                    id={index}
-                    href={`#${key}`}
-                    onClick={this.clickHandler}
+                    id={uniqueId + index}
+                    href={`#${key + uniqueId}`}
+                    onClick={() => this.clickHandler(index)}
                   >
                     {snippet.target}
                   </a>
@@ -61,12 +69,11 @@ export default class CodeSnippetWidget extends React.Component {
           <div className="tabs-component-panels">
             {this.props.snippets
               .map((snippet, index) => {
-
-                const activeTab = index == this.state.active;
+                const activeTab = (uniqueId + index) == this.state.active;
                 const key = this.getSnippetKey(snippet)
                 return (
-                  <section hidden={!activeTab} role="tabpanel" id={`${key}`} key={`#${key}`}>
-                    <CodeSnippet har={this.props.har} {...snippet} />
+                  <section hidden={!activeTab} role="tabpanel" id={`${key + uniqueId}`} key={index}>
+                    <CodeSnippet har={har} {...snippet} />
                   </section>
                 )
               })}
