@@ -20,7 +20,7 @@ export default class CodeSnippetWidget extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.har.url !== this.props.har.url) {
-      this.setState({ active: this.props.har.method + this.props.har.url + this.state.activeTab})
+      this.setState({ active: this.getHarKey(this.props.har) + this.state.activeTab})
     }
   }
 
@@ -29,7 +29,7 @@ export default class CodeSnippetWidget extends React.Component {
   }
 
   clickHandler(index) {
-    this.setState({ active: this.props.har.method + this.props.har.url + index, activeTab: index })
+    this.setState({ active: this.getHarKey(this.props.har) + index, activeTab: index })
   }
 
   getHarKey(harObject) {
