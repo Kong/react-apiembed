@@ -1039,6 +1039,11 @@
 	      this.setState({ active: this.props.har.method + this.props.har.url + index, activeTab: index });
 	    }
 	  }, {
+	    key: "getHarKey",
+	    value: function getHarKey(harObject) {
+	      return harObject.method + harObject.url;
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
 	      var _this2 = this;
@@ -1046,7 +1051,7 @@
 	      var har = this.props.har;
 
 
-	      var uniqueId = har.method + har.url;
+	      var harKey = this.getHarKey(har);
 
 	      return React.createElement(
 	        "div",
@@ -1058,23 +1063,23 @@
 	            "ul",
 	            { role: "tablist", className: "tabs-component-tabs" },
 	            this.props.snippets.map(function (snippet, index) {
-	              var key = _this2.getSnippetKey(snippet);
+	              var snippetKey = _this2.getSnippetKey(snippet);
+
 	              return React.createElement(
 	                "li",
 	                {
 	                  role: "presentation",
-	                  className: "tabs-component-tab" + (uniqueId + index == _this2.state.active ? " is-active" : ""),
+	                  className: "tabs-component-tab" + (harKey + index == _this2.state.active ? " is-active" : ""),
 	                  key: index
 	                },
 	                React.createElement(
 	                  "a",
 	                  {
-	                    "aria-controls": "" + (key + uniqueId),
+	                    "aria-controls": "" + (snippetKey + harKey),
 	                    "aria-selected": "true",
 	                    role: "tab",
 	                    className: "tabs-component-tab-a",
-	                    id: uniqueId + index,
-	                    href: "#" + (key + uniqueId),
+	                    id: harKey + index,
 	                    onClick: function onClick() {
 	                      return _this2.clickHandler(index);
 	                    }
@@ -1088,11 +1093,12 @@
 	            "div",
 	            { className: "tabs-component-panels" },
 	            this.props.snippets.map(function (snippet, index) {
-	              var activeTab = uniqueId + index == _this2.state.active;
-	              var key = _this2.getSnippetKey(snippet);
+	              var activeTab = harKey + index == _this2.state.active;
+	              var snippetKey = _this2.getSnippetKey(snippet);
+
 	              return React.createElement(
 	                "section",
-	                { hidden: !activeTab, role: "tabpanel", id: "" + (key + uniqueId), key: index },
+	                { hidden: !activeTab, role: "tabpanel", id: "" + (snippetKey + harKey), key: index },
 	                React.createElement(CodeSnippet, _extends({ har: har }, snippet))
 	              );
 	            })
