@@ -986,7 +986,7 @@
 
 	      return React.createElement(
 	        "pre",
-	        { className: "language-" + this.props.prismLanguage },
+	        { className: "language-" + this.props.prismLanguage, tabIndex: "0" },
 	        React.createElement("code", {
 	          className: "language-" + this.props.prismLanguage,
 	          dangerouslySetInnerHTML: codeHTML

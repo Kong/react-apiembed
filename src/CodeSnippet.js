@@ -37,7 +37,7 @@ export default class CodeSnippet extends React.Component {
     }
 
     return (
-      <pre className={`language-${this.props.prismLanguage}`}>
+      <pre className={`language-${this.props.prismLanguage}`} tabIndex="0">
         <code
           className={`language-${this.props.prismLanguage}`}
           dangerouslySetInnerHTML={codeHTML}
