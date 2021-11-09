@@ -986,7 +986,7 @@
 
 	      return React.createElement(
 	        "pre",
-	        { className: "language-" + this.props.prismLanguage },
+	        { className: "language-" + this.props.prismLanguage, tabIndex: "0" },
 	        React.createElement("code", {
 	          className: "language-" + this.props.prismLanguage,
 	          dangerouslySetInnerHTML: codeHTML
@@ -1015,21 +1015,33 @@
 
 	    _this.clickHandler = _this.clickHandler.bind(_this);
 	    _this.state = {
-	      active: 0
+	      activeTab: 0,
+	      active: props.har.method + props.har.url + 0
 	    };
 	    return _this;
 	  }
 
 	  createClass(CodeSnippetWidget, [{
+	    key: "componentDidUpdate",
+	    value: function componentDidUpdate(prevProps) {
+	      if (prevProps.har.url !== this.props.har.url) {
+	        this.setState({ active: this.getHarKey(this.props.har) + this.state.activeTab });
+	      }
+	    }
+	  }, {
 	    key: "getSnippetKey",
 	    value: function getSnippetKey(snippet) {
 	      return "" + snippet.target + (snippet.client ? "-" + snippet.client : "");
 	    }
 	  }, {
 	    key: "clickHandler",
-	    value: function clickHandler(e) {
-	      e.preventDefault();
-	      this.setState({ active: e.target.id });
+	    value: function clickHandler(index) {
+	      this.setState({ active: this.getHarKey(this.props.har) + index, activeTab: index });
+	    }
+	  }, {
+	    key: "getHarKey",
+	    value: function getHarKey(harObject) {
+	      return harObject.method + harObject.url;
 	    }
 	  }, {
 	    key: "render",
@@ -1038,6 +1050,8 @@
 
 	      var har = this.props.har;
 
+
+	      var harKey = this.getHarKey(har);
 
 	      return React.createElement(
 	        "div",
@@ -1049,24 +1063,26 @@
 	            "ul",
 	            { role: "tablist", className: "tabs-component-tabs" },
 	            this.props.snippets.map(function (snippet, index) {
-	              var key = _this2.getSnippetKey(snippet);
+	              var snippetKey = _this2.getSnippetKey(snippet);
+
 	              return React.createElement(
 	                "li",
 	                {
 	                  role: "presentation",
-	                  className: "tabs-component-tab" + (index == _this2.state.active ? " is-active" : ""),
+	                  className: "tabs-component-tab" + (harKey + index == _this2.state.active ? " is-active" : ""),
 	                  key: index
 	                },
 	                React.createElement(
 	                  "a",
 	                  {
-	                    "aria-controls": "" + key,
+	                    "aria-controls": "" + (snippetKey + harKey),
 	                    "aria-selected": "true",
 	                    role: "tab",
 	                    className: "tabs-component-tab-a",
-	                    id: index,
-	                    href: "#" + key,
-	                    onClick: _this2.clickHandler
+	                    id: harKey + index,
+	                    onClick: function onClick() {
+	                      return _this2.clickHandler(index);
+	                    }
 	                  },
 	                  snippet.target
 	                )
@@ -1077,13 +1093,13 @@
 	            "div",
 	            { className: "tabs-component-panels" },
 	            this.props.snippets.map(function (snippet, index) {
+	              var activeTab = harKey + index == _this2.state.active;
+	              var snippetKey = _this2.getSnippetKey(snippet);
 
-	              var activeTab = index == _this2.state.active;
-	              var key = _this2.getSnippetKey(snippet);
 	              return React.createElement(
 	                "section",
-	                { hidden: !activeTab, role: "tabpanel", id: "" + key, key: "#" + key },
-	                React.createElement(CodeSnippet, _extends({ har: _this2.props.har }, snippet))
+	                { hidden: !activeTab, role: "tabpanel", id: "" + (snippetKey + harKey), key: index },
+	                React.createElement(CodeSnippet, _extends({ har: har }, snippet))
 	              );
 	            })
 	          )
