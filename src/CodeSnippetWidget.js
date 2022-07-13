@@ -6,7 +6,7 @@ import CodeSnippet from "./CodeSnippet"
 export default class CodeSnippetWidget extends React.Component {
   static propTypes = {
     har: PropTypes.object.isRequired,
-    snippets: PropTypes.array.isRequired
+    snippets: PropTypes.array.isRequired,
   }
 
   constructor(props) {
@@ -14,13 +14,13 @@ export default class CodeSnippetWidget extends React.Component {
     this.clickHandler = this.clickHandler.bind(this)
     this.state = {
       activeTab: 0,
-      active: props.har.method + props.har.url + 0
+      active: props.har.method + props.har.url + 0,
     }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.har.url !== this.props.har.url) {
-      this.setState({ active: this.getHarKey(this.props.har) + this.state.activeTab})
+      this.setState({ active: this.getHarKey(this.props.har) + this.state.activeTab })
     }
   }
 
@@ -39,7 +39,7 @@ export default class CodeSnippetWidget extends React.Component {
   render() {
     const { har } = this.props
 
-    const harKey = this.getHarKey(har);
+    const harKey = this.getHarKey(har)
 
     return (
       <div className="tabs-component">
@@ -52,7 +52,7 @@ export default class CodeSnippetWidget extends React.Component {
                 <li
                   role="presentation"
                   className={
-                    "tabs-component-tab" + ((harKey + index) == this.state.active ? " is-active" : "")
+                    "tabs-component-tab" + (harKey + index == this.state.active ? " is-active" : "")
                   }
                   key={index}
                 >
@@ -65,23 +65,28 @@ export default class CodeSnippetWidget extends React.Component {
                     onClick={() => this.clickHandler(index)}
                   >
                     {snippet.target}
+                    {snippet.client && ` - ${snippet.client}`}
                   </a>
                 </li>
               )
             })}
           </ul>
           <div className="tabs-component-panels">
-            {this.props.snippets
-              .map((snippet, index) => {
-                const activeTab = (harKey + index) == this.state.active;
-                const snippetKey = this.getSnippetKey(snippet)
+            {this.props.snippets.map((snippet, index) => {
+              const activeTab = harKey + index == this.state.active
+              const snippetKey = this.getSnippetKey(snippet)
 
-                return (
-                  <section hidden={!activeTab} role="tabpanel" id={`${snippetKey + harKey}`} key={index}>
-                    <CodeSnippet har={har} {...snippet} />
-                  </section>
-                )
-              })}
+              return (
+                <section
+                  hidden={!activeTab}
+                  role="tabpanel"
+                  id={`${snippetKey + harKey}`}
+                  key={index}
+                >
+                  <CodeSnippet har={har} {...snippet} />
+                </section>
+              )
+            })}
           </div>
         </div>
       </div>
