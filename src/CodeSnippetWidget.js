@@ -88,14 +88,14 @@ export default class CodeSnippetWidget extends React.Component {
                   ref={el => this.tabRefs[index].current = el}
                   key={index}
                 >
-                  <span
+                  <a
                     role="presentation"
                     className="tabs-component-tab-a"
                     id={harKey + index}
                   >
                     {snippet.target}
                     {snippet.client && ` - ${snippet.client}`}
-                  </span>
+                  </a>
                 </li>
               )
             })}
