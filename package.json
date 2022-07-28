@@ -1,6 +1,6 @@
 {
   "name": "react-apiembed",
-  "version": "0.1.5",
+  "version": "0.1.4",
   "description": "React api embed component.",
   "files": [
     "dist"
