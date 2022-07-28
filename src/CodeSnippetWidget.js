@@ -65,7 +65,7 @@ export default class CodeSnippetWidget extends React.Component {
                     onClick={() => this.clickHandler(index)}
                   >
                     {snippet.target}
-                    {snippet.client && ` - ${snippet.client}`}
+                    {snippet.client && snippet.showClientInTab && ` - ${snippet.client}`}
                   </a>
                 </li>
               )

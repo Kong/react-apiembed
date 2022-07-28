@@ -51,5 +51,6 @@ CodeSnippet.propTypes = {
   har: PropTypes.object.isRequired,
   target: PropTypes.string.isRequired,
   client: PropTypes.string,
+  showClientInTab: PropTypes.boolean,
   prismLanguage: PropTypes.string.isRequired
 }
