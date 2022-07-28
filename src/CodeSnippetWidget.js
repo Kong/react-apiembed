@@ -94,7 +94,7 @@ export default class CodeSnippetWidget extends React.Component {
                     id={harKey + index}
                   >
                     {snippet.target}
-                    {snippet.client && ` - ${snippet.client}`}
+                    {snippet.client && snippet.showClientInTab && ` - ${snippet.client}`}
                   </a>
                 </li>
               )
