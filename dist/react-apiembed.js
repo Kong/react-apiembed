@@ -1002,6 +1002,7 @@
 	  har: PropTypes.object.isRequired,
 	  target: PropTypes.string.isRequired,
 	  client: PropTypes.string,
+	  showClientInTab: PropTypes.boolean,
 	  prismLanguage: PropTypes.string.isRequired
 	};
 
@@ -1014,18 +1015,26 @@
 	    var _this = possibleConstructorReturn(this, (CodeSnippetWidget.__proto__ || Object.getPrototypeOf(CodeSnippetWidget)).call(this, props));
 
 	    _this.clickHandler = _this.clickHandler.bind(_this);
+	    _this.keypressHandler = _this.keypressHandler.bind(_this);
 	    _this.state = {
 	      activeTab: 0,
 	      active: props.har.method + props.har.url + 0
 	    };
+	    _this.tabRefs = Array.from({ length: _this.props.snippets.length }, function () {
+	      return React.createRef();
+	    });
 	    return _this;
 	  }
 
 	  createClass(CodeSnippetWidget, [{
 	    key: "componentDidUpdate",
-	    value: function componentDidUpdate(prevProps) {
+	    value: function componentDidUpdate(prevProps, prevState) {
 	      if (prevProps.har.url !== this.props.har.url) {
 	        this.setState({ active: this.getHarKey(this.props.har) + this.state.activeTab });
+	      }
+
+	      if (prevState.activeTab !== this.state.activeTab) {
+	        this.tabRefs[this.state.activeTab].current.focus();
 	      }
 	    }
 	  }, {
@@ -1037,6 +1046,27 @@
 	    key: "clickHandler",
 	    value: function clickHandler(index) {
 	      this.setState({ active: this.getHarKey(this.props.har) + index, activeTab: index });
+	    }
+	  }, {
+	    key: "keypressHandler",
+	    value: function keypressHandler(key, index) {
+	      var targetIndex = index;
+	      var lastIndex = this.props.snippets.length - 1;
+
+	      if (key === "ArrowUp" || key === "ArrowLeft") {
+	        if (index === 0) {
+	          targetIndex = lastIndex;
+	        } else {
+	          targetIndex = index - 1;
+	        }
+	      } else if (key === "ArrowRight" || key === "ArrowDown") {
+	        if (index === lastIndex) {
+	          targetIndex = 0;
+	        } else {
+	          targetIndex = index + 1;
+	        }
+	      }
+	      this.setState({ active: this.getHarKey(this.props.har) + targetIndex, activeTab: targetIndex });
 	    }
 	  }, {
 	    key: "getHarKey",
@@ -1068,23 +1098,31 @@
 	              return React.createElement(
 	                "li",
 	                {
-	                  role: "presentation",
+	                  role: "tab",
 	                  className: "tabs-component-tab" + (harKey + index == _this2.state.active ? " is-active" : ""),
+	                  "aria-controls": "" + (snippetKey + harKey),
+	                  onKeyUp: function onKeyUp(e) {
+	                    return _this2.keypressHandler(e.nativeEvent.code, index);
+	                  },
+	                  onClick: function onClick() {
+	                    return _this2.clickHandler(index);
+	                  },
+	                  "aria-selected": harKey + index == _this2.state.active,
+	                  tabIndex: harKey + index == _this2.state.active ? 0 : -1,
+	                  ref: function ref(el) {
+	                    return _this2.tabRefs[index].current = el;
+	                  },
 	                  key: index
 	                },
 	                React.createElement(
 	                  "a",
 	                  {
-	                    "aria-controls": "" + (snippetKey + harKey),
-	                    "aria-selected": "true",
-	                    role: "tab",
+	                    role: "presentation",
 	                    className: "tabs-component-tab-a",
-	                    id: harKey + index,
-	                    onClick: function onClick() {
-	                      return _this2.clickHandler(index);
-	                    }
+	                    id: harKey + index
 	                  },
-	                  snippet.target
+	                  snippet.target,
+	                  snippet.client && snippet.showClientInTab && " - " + snippet.client
 	                )
 	              );
 	            })
