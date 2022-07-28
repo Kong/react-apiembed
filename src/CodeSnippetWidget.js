@@ -12,15 +12,21 @@ export default class CodeSnippetWidget extends React.Component {
   constructor(props) {
     super(props)
     this.clickHandler = this.clickHandler.bind(this)
+    this.keypressHandler = this.keypressHandler.bind(this)
     this.state = {
       activeTab: 0,
       active: props.har.method + props.har.url + 0
     }
+    this.tabRefs = Array.from({length: this.props.snippets.length}, () => React.createRef());
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.har.url !== this.props.har.url) {
       this.setState({ active: this.getHarKey(this.props.har) + this.state.activeTab})
+    }
+
+    if (prevState.activeTab !== this.state.activeTab) {
+      this.tabRefs[this.state.activeTab].current.focus()
     }
   }
 
@@ -30,6 +36,26 @@ export default class CodeSnippetWidget extends React.Component {
 
   clickHandler(index) {
     this.setState({ active: this.getHarKey(this.props.har) + index, activeTab: index })
+  }
+
+  keypressHandler(key, index) {
+    let targetIndex = index
+    const lastIndex = this.props.snippets.length - 1
+
+    if (key === "ArrowUp" || key === "ArrowLeft") {
+      if (index === 0) {
+        targetIndex = lastIndex
+      } else {
+        targetIndex = index - 1
+      }
+    } else if (key === "ArrowRight" || key === "ArrowDown") {
+      if (index === lastIndex) {
+        targetIndex = 0
+      } else {
+        targetIndex = index + 1
+      }
+    }
+    this.setState({ active: this.getHarKey(this.props.har) + targetIndex, activeTab: targetIndex })
   }
 
   getHarKey(harObject) {
@@ -50,19 +76,22 @@ export default class CodeSnippetWidget extends React.Component {
 
               return (
                 <li
-                  role="presentation"
+                  role="tab"
                   className={
                     "tabs-component-tab" + ((harKey + index) == this.state.active ? " is-active" : "")
                   }
+                  aria-controls={`${snippetKey + harKey}`}
+                  onKeyUp={(e) => this.keypressHandler(e.nativeEvent.code, index)}
+                  onClick={() => this.clickHandler(index)}
+                  aria-selected={(harKey + index) == this.state.active}
+                  tabIndex={(harKey + index) == this.state.active ? 0 : -1}
+                  ref={el => this.tabRefs[index].current = el}
                   key={index}
                 >
                   <a
-                    aria-controls={`${snippetKey + harKey}`}
-                    aria-selected="true"
-                    role="tab"
+                    role="presentation"
                     className="tabs-component-tab-a"
                     id={harKey + index}
-                    onClick={() => this.clickHandler(index)}
                   >
                     {snippet.target}
                     {snippet.client && ` - ${snippet.client}`}
