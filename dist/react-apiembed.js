@@ -1014,15 +1014,17 @@
 
 	    var _this = possibleConstructorReturn(this, (CodeSnippetWidget.__proto__ || Object.getPrototypeOf(CodeSnippetWidget)).call(this, props));
 
+	    _this.setTabRef = function (element, index) {
+	      _this.tabRefs[index] = element;
+	    };
+
 	    _this.clickHandler = _this.clickHandler.bind(_this);
 	    _this.keypressHandler = _this.keypressHandler.bind(_this);
 	    _this.state = {
 	      activeTab: 0,
 	      active: props.har.method + props.har.url + 0
 	    };
-	    _this.tabRefs = Array.from({ length: _this.props.snippets.length }, function () {
-	      return React.createRef();
-	    });
+	    _this.tabRefs = [];
 	    return _this;
 	  }
 
@@ -1034,7 +1036,7 @@
 	      }
 
 	      if (prevState.activeTab !== this.state.activeTab) {
-	        this.tabRefs[this.state.activeTab].current.focus();
+	        this.tabRefs[this.state.activeTab].focus();
 	      }
 	    }
 	  }, {
@@ -1110,7 +1112,7 @@
 	                  "aria-selected": harKey + index == _this2.state.active,
 	                  tabIndex: harKey + index == _this2.state.active ? 0 : -1,
 	                  ref: function ref(el) {
-	                    return _this2.tabRefs[index].current = el;
+	                    return _this2.setTabRef(el, index);
 	                  },
 	                  key: index
 	                },
