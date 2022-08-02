@@ -17,7 +17,7 @@ export default class CodeSnippetWidget extends React.Component {
       activeTab: 0,
       active: props.har.method + props.har.url + 0
     }
-    this.tabRefs = Array.from({length: this.props.snippets.length}, () => React.createRef());
+    this.tabRefs = [];
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -26,9 +26,13 @@ export default class CodeSnippetWidget extends React.Component {
     }
 
     if (prevState.activeTab !== this.state.activeTab) {
-      this.tabRefs[this.state.activeTab].current.focus()
+      this.tabRefs[this.state.activeTab].focus()
     }
   }
+
+  setTabRef = (element, index) => {
+    this.tabRefs[index] = element;
+  };
 
   getSnippetKey(snippet) {
     return `${snippet.target}${snippet.client ? `-${snippet.client}` : ""}`
@@ -85,7 +89,7 @@ export default class CodeSnippetWidget extends React.Component {
                   onClick={() => this.clickHandler(index)}
                   aria-selected={(harKey + index) == this.state.active}
                   tabIndex={(harKey + index) == this.state.active ? 0 : -1}
-                  ref={el => this.tabRefs[index].current = el}
+                  ref={el => this.setTabRef(el, index)}
                   key={index}
                 >
                   <a
