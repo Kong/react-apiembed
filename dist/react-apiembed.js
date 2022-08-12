@@ -981,12 +981,12 @@
 
 	      var code = new HTTPSnippet(har).convert(target, client);
 	      var codeHTML = {
-	        __html: prism.highlight(code, prism.languages[prismLanguage], prismLanguage)
+	        __html: "<div tabindex=\"0\">" + prism.highlight(code, prism.languages[prismLanguage], prismLanguage).replaceAll('<span', '<span role="text"') + "</div>"
 	      };
 
 	      return React.createElement(
 	        "pre",
-	        { className: "language-" + this.props.prismLanguage, tabIndex: "0" },
+	        { className: "language-" + this.props.prismLanguage },
 	        React.createElement("code", {
 	          className: "language-" + this.props.prismLanguage,
 	          dangerouslySetInnerHTML: codeHTML
