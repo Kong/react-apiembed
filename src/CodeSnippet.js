@@ -33,11 +33,11 @@ export default class CodeSnippet extends React.Component {
 
     const code = new HTTPSnippet(har).convert(target, client)
     const codeHTML = {
-      __html: Prism.highlight(code, Prism.languages[prismLanguage], prismLanguage)
+      __html: `<div tabindex="0">${Prism.highlight(code, Prism.languages[prismLanguage], prismLanguage).replaceAll('<span', '<span role="text"')}</div>`
     }
 
     return (
-      <pre className={`language-${this.props.prismLanguage}`} tabIndex="0">
+      <pre className={`language-${this.props.prismLanguage}`}>
         <code
           className={`language-${this.props.prismLanguage}`}
           dangerouslySetInnerHTML={codeHTML}
