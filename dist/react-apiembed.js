@@ -973,7 +973,10 @@
 	          har = _props.har,
 	          target = _props.target,
 	          client = _props.client,
-	          prismLanguage = _props.prismLanguage;
+	          prismLanguage = _props.prismLanguage,
+	          tabIndex = _props.tabIndex,
+	          passedRef = _props.passedRef,
+	          keypressHandler = _props.keypressHandler;
 	      // loadLanguages([prismLanguage])
 
 	      // TODO: httpsnippet should expose isLanguageSupported() method
@@ -981,16 +984,17 @@
 
 	      var code = new HTTPSnippet(har).convert(target, client);
 	      var codeHTML = {
-	        __html: "<div tabindex=\"0\">" + prism.highlight(code, prism.languages[prismLanguage], prismLanguage).replaceAll('<span', '<span role="text"') + "</div>"
+	        __html: "" + prism.highlight(code, prism.languages[prismLanguage], prismLanguage).replaceAll('<span', '<span role="text"')
 	      };
 
 	      return React.createElement(
 	        "pre",
-	        { className: "language-" + this.props.prismLanguage },
-	        React.createElement("code", {
-	          className: "language-" + this.props.prismLanguage,
-	          dangerouslySetInnerHTML: codeHTML
-	        })
+	        { className: "language-" + this.props.prismLanguage, onKeyDown: keypressHandler },
+	        React.createElement(
+	          "code",
+	          { className: "language-" + this.props.prismLanguage },
+	          React.createElement("div", { ref: passedRef, tabIndex: tabIndex, dangerouslySetInnerHTML: codeHTML })
+	        )
 	      );
 	    }
 	  }]);
@@ -1002,8 +1006,11 @@
 	  har: PropTypes.object.isRequired,
 	  target: PropTypes.string.isRequired,
 	  client: PropTypes.string,
-	  showClientInTab: PropTypes.boolean,
-	  prismLanguage: PropTypes.string.isRequired
+	  showClientInTab: PropTypes.bool,
+	  prismLanguage: PropTypes.string.isRequired,
+	  tabIndex: PropTypes.number,
+	  passedRef: PropTypes.func,
+	  keypressHandler: PropTypes.func
 	};
 
 	var CodeSnippetWidget = function (_React$Component) {
@@ -1018,6 +1025,10 @@
 	      _this.tabRefs[index] = element;
 	    };
 
+	    _this.setContentRef = function (element, index) {
+	      _this.contentRefs[index] = element;
+	    };
+
 	    _this.clickHandler = _this.clickHandler.bind(_this);
 	    _this.keypressHandler = _this.keypressHandler.bind(_this);
 	    _this.state = {
@@ -1025,6 +1036,7 @@
 	      active: props.har.method + props.har.url + 0
 	    };
 	    _this.tabRefs = [];
+	    _this.contentRefs = [];
 	    return _this;
 	  }
 
@@ -1051,7 +1063,7 @@
 	    }
 	  }, {
 	    key: "keypressHandler",
-	    value: function keypressHandler(key, index) {
+	    value: function keypressHandler(key, index, event) {
 	      var targetIndex = index;
 	      var lastIndex = this.props.snippets.length - 1;
 
@@ -1066,6 +1078,32 @@
 	          targetIndex = 0;
 	        } else {
 	          targetIndex = index + 1;
+	        }
+	      } else if (key === "Enter") {
+	        this.contentRefs[this.state.activeTab].focus();
+	      } else if (key === "Tab" && event.shiftKey) {
+	        if (index !== 0) {
+	          event.preventDefault();
+	          this.contentRefs[this.state.activeTab].focus();
+	        }
+	      }
+	      this.setState({ active: this.getHarKey(this.props.har) + targetIndex, activeTab: targetIndex });
+	    }
+	  }, {
+	    key: "contentKeypressHandler",
+	    value: function contentKeypressHandler(key, index, event) {
+	      var targetIndex = index;
+	      var lastIndex = this.props.snippets.length - 1;
+
+	      if (key === "Tab" && !event.shiftKey) {
+	        if (index !== lastIndex) {
+	          event.preventDefault();
+	          targetIndex = index + 1;
+	        }
+	      } else if (key === "Tab" && event.shiftKey) {
+	        if (index !== 0) {
+	          event.preventDefault();
+	          targetIndex = index - 1;
 	        }
 	      }
 	      this.setState({ active: this.getHarKey(this.props.har) + targetIndex, activeTab: targetIndex });
@@ -1103,8 +1141,8 @@
 	                  role: "tab",
 	                  className: "tabs-component-tab" + (harKey + index == _this2.state.active ? " is-active" : ""),
 	                  "aria-controls": "" + (snippetKey + harKey),
-	                  onKeyUp: function onKeyUp(e) {
-	                    return _this2.keypressHandler(e.nativeEvent.code, index);
+	                  onKeyDown: function onKeyDown(e) {
+	                    return _this2.keypressHandler(e.nativeEvent.code, index, e);
 	                  },
 	                  onClick: function onClick() {
 	                    return _this2.clickHandler(index);
@@ -1138,8 +1176,22 @@
 
 	              return React.createElement(
 	                "section",
-	                { hidden: !activeTab, role: "tabpanel", id: "" + (snippetKey + harKey), key: index },
-	                React.createElement(CodeSnippet, _extends({ har: har }, snippet))
+	                {
+	                  hidden: !activeTab,
+	                  role: "tabpanel",
+	                  id: "" + (snippetKey + harKey),
+	                  key: index
+	                },
+	                React.createElement(CodeSnippet, _extends({
+	                  tabIndex: activeTab ? 0 : -1,
+	                  har: har,
+	                  passedRef: function passedRef(el) {
+	                    return _this2.setContentRef(el, index);
+	                  },
+	                  keypressHandler: function keypressHandler(e) {
+	                    return _this2.contentKeypressHandler(e.nativeEvent.code, index, e);
+	                  }
+	                }, snippet))
 	              );
 	            })
 	          )
