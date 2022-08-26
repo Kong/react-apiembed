@@ -25,7 +25,7 @@ export default class CodeSnippet extends React.Component {
   }
 
   render() {
-    let { har, target, client, prismLanguage } = this.props
+    let { har, target, client, prismLanguage, tabIndex, passedRef, keypressHandler } = this.props
     // loadLanguages([prismLanguage])
 
     // TODO: httpsnippet should expose isLanguageSupported() method
@@ -33,15 +33,14 @@ export default class CodeSnippet extends React.Component {
 
     const code = new HTTPSnippet(har).convert(target, client)
     const codeHTML = {
-      __html: `<div tabindex="0">${Prism.highlight(code, Prism.languages[prismLanguage], prismLanguage).replaceAll('<span', '<span role="text"')}</div>`
+      __html: `${Prism.highlight(code, Prism.languages[prismLanguage], prismLanguage).replaceAll('<span', '<span role="text"')}`
     }
 
     return (
-      <pre className={`language-${this.props.prismLanguage}`}>
-        <code
-          className={`language-${this.props.prismLanguage}`}
-          dangerouslySetInnerHTML={codeHTML}
-        />
+      <pre className={`language-${this.props.prismLanguage}`} onKeyDown={keypressHandler}>
+        <code className={`language-${this.props.prismLanguage}`}>
+          <div ref={passedRef} tabIndex={tabIndex} dangerouslySetInnerHTML={codeHTML} />
+        </code>
       </pre>
     )
   }
@@ -51,6 +50,9 @@ CodeSnippet.propTypes = {
   har: PropTypes.object.isRequired,
   target: PropTypes.string.isRequired,
   client: PropTypes.string,
-  showClientInTab: PropTypes.boolean,
-  prismLanguage: PropTypes.string.isRequired
+  showClientInTab: PropTypes.bool,
+  prismLanguage: PropTypes.string.isRequired,
+  tabIndex: PropTypes.number,
+  passedRef: PropTypes.func,
+  keypressHandler: PropTypes.func
 }
