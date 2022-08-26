@@ -47,7 +47,7 @@ export default class CodeSnippetWidget extends React.Component {
     this.setState({ active: this.getHarKey(this.props.har) + index, activeTab: index })
   }
 
-  keypressHandler(key, index) {
+  keypressHandler(key, index, event) {
     let targetIndex = index
     const lastIndex = this.props.snippets.length - 1
 
@@ -65,6 +65,11 @@ export default class CodeSnippetWidget extends React.Component {
       }
     } else if (key === "Enter") {
       this.contentRefs[this.state.activeTab].focus()
+    } else if (key === "Tab" && event.shiftKey) {
+      if (index !== 0) {
+        event.preventDefault()
+        this.contentRefs[this.state.activeTab].focus()
+      }
     }
     this.setState({ active: this.getHarKey(this.props.har) + targetIndex, activeTab: targetIndex })
   }
@@ -76,10 +81,16 @@ export default class CodeSnippetWidget extends React.Component {
     
     if (key === "Tab" && !event.shiftKey) {
       if (index !== lastIndex) {
+        event.preventDefault()
         targetIndex = index + 1
-        this.setState({ active: this.getHarKey(this.props.har) + targetIndex, activeTab: targetIndex })
+      }
+    } else if (key === "Tab" && event.shiftKey) {
+      if (index !== 0) {
+        event.preventDefault()
+        targetIndex = index - 1
       }
     }
+    this.setState({ active: this.getHarKey(this.props.har) + targetIndex, activeTab: targetIndex })
   }
 
   getHarKey(harObject) {
@@ -105,7 +116,7 @@ export default class CodeSnippetWidget extends React.Component {
                     "tabs-component-tab" + ((harKey + index) == this.state.active ? " is-active" : "")
                   }
                   aria-controls={`${snippetKey + harKey}`}
-                  onKeyDown={(e) => this.keypressHandler(e.nativeEvent.code, index)}
+                  onKeyDown={(e) => this.keypressHandler(e.nativeEvent.code, index, e)}
                   onClick={() => this.clickHandler(index)}
                   aria-selected={(harKey + index) == this.state.active}
                   tabIndex={(harKey + index) == this.state.active ? 0 : -1}
