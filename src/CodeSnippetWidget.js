@@ -18,6 +18,7 @@ export default class CodeSnippetWidget extends React.Component {
       active: props.har.method + props.har.url + 0
     }
     this.tabRefs = [];
+    this.contentRefs = [];
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -34,6 +35,10 @@ export default class CodeSnippetWidget extends React.Component {
     this.tabRefs[index] = element;
   };
 
+  setContentRef = (element, index) => {
+    this.contentRefs[index] = element
+  }
+
   getSnippetKey(snippet) {
     return `${snippet.target}${snippet.client ? `-${snippet.client}` : ""}`
   }
@@ -42,7 +47,7 @@ export default class CodeSnippetWidget extends React.Component {
     this.setState({ active: this.getHarKey(this.props.har) + index, activeTab: index })
   }
 
-  keypressHandler(key, index) {
+  keypressHandler(key, index, event) {
     let targetIndex = index
     const lastIndex = this.props.snippets.length - 1
 
@@ -57,6 +62,32 @@ export default class CodeSnippetWidget extends React.Component {
         targetIndex = 0
       } else {
         targetIndex = index + 1
+      }
+    } else if (key === "Enter") {
+      this.contentRefs[this.state.activeTab].focus()
+    } else if (key === "Tab" && event.shiftKey) {
+      if (index !== 0) {
+        event.preventDefault()
+        this.contentRefs[this.state.activeTab].focus()
+      }
+    }
+    this.setState({ active: this.getHarKey(this.props.har) + targetIndex, activeTab: targetIndex })
+  }
+
+  contentKeypressHandler(key, index, event) {
+    let targetIndex = index
+    const lastIndex = this.props.snippets.length - 1
+
+    
+    if (key === "Tab" && !event.shiftKey) {
+      if (index !== lastIndex) {
+        event.preventDefault()
+        targetIndex = index + 1
+      }
+    } else if (key === "Tab" && event.shiftKey) {
+      if (index !== 0) {
+        event.preventDefault()
+        targetIndex = index - 1
       }
     }
     this.setState({ active: this.getHarKey(this.props.har) + targetIndex, activeTab: targetIndex })
@@ -85,7 +116,7 @@ export default class CodeSnippetWidget extends React.Component {
                     "tabs-component-tab" + ((harKey + index) == this.state.active ? " is-active" : "")
                   }
                   aria-controls={`${snippetKey + harKey}`}
-                  onKeyUp={(e) => this.keypressHandler(e.nativeEvent.code, index)}
+                  onKeyDown={(e) => this.keypressHandler(e.nativeEvent.code, index, e)}
                   onClick={() => this.clickHandler(index)}
                   aria-selected={(harKey + index) == this.state.active}
                   tabIndex={(harKey + index) == this.state.active ? 0 : -1}
@@ -111,8 +142,19 @@ export default class CodeSnippetWidget extends React.Component {
                 const snippetKey = this.getSnippetKey(snippet)
 
                 return (
-                  <section hidden={!activeTab} role="tabpanel" id={`${snippetKey + harKey}`} key={index}>
-                    <CodeSnippet har={har} {...snippet} />
+                  <section 
+                    hidden={!activeTab}
+                    role="tabpanel"
+                    id={`${snippetKey + harKey}`}
+                    key={index}
+                  >
+                    <CodeSnippet
+                      tabIndex={activeTab ? 0 : -1}
+                      har={har}
+                      passedRef={el => this.setContentRef(el, index)}
+                      keypressHandler={(e) => this.contentKeypressHandler(e.nativeEvent.code, index, e)}
+                      {...snippet}
+                    />
                   </section>
                 )
               })}
