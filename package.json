@@ -23,8 +23,7 @@
     "prismjs": "^1.29.0",
     "prop-types": "^15.6.1",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "yarn-audit-fix": "^9.3.7"
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
