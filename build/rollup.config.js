@@ -1,5 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import { uglify } from "rollup-plugin-uglify";
 import babel from 'rollup-plugin-babel';
 import filesize from 'rollup-plugin-filesize'
 
@@ -25,6 +26,7 @@ export default {
   ],
   plugins: [
     filesize(),
+    uglify(),
     resolve({
       browser: true,
       preferBuiltins: false
