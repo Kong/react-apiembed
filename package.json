@@ -22,7 +22,8 @@
     "prismjs": "^1.13.0",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "yarn-audit-fix": "^9.3.7"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.3.15",
