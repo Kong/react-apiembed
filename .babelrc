@@ -1,15 +1,12 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "modules": false
-      }
-    ],
-    "stage-3",
-    "react"
+    "@babel/preset-react",
+    "@babel/preset-env"
   ],
   "plugins": [
-    "transform-class-properties"
+    "transform-class-properties",
+    ["prismjs", {
+      "languages": ["bash", "javascript", "php", "go", "ruby", "ocaml", "ruby", "java", "python", "swift", "csharp"]
+    }]
   ]
 }
