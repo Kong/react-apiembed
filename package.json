@@ -1,6 +1,6 @@
 {
   "name": "react-apiembed",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "React api embed component.",
   "files": [
     "dist"
@@ -17,27 +17,29 @@
     "build-storybook": "build-storybook -c .storybook -o docs"
   },
   "dependencies": {
+    "babel-plugin-prismjs": "^2.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "httpsnippet": "^2.0.0",
-    "prismjs": "^1.13.0",
+    "prismjs": "^1.29.0",
     "prop-types": "^15.6.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.3.15",
-    "@storybook/addon-links": "^3.3.15",
-    "@storybook/addons": "^3.3.15",
-    "@storybook/react": "^3.3.15",
-    "babel-core": "^6.26.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-1": "^6.24.1",
-    "rollup": "^0.57.1",
-    "rollup-plugin-babel": "^3.0.3",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-external-helpers": "^7.18.6",
+    "@babel/preset-env": "*",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-stage-1": "*",
+    "@storybook/addon-actions": "6.5.9",
+    "@storybook/addon-links": "6.5.9",
+    "@storybook/addons": "6.5.9",
+    "@storybook/react": "6.5.9",
+    "rollup": "2.75.7",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-filesize": "^1.5.0",
-    "rollup-plugin-node-resolve": "^3.3.0"
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "6.0.4"
   }
 }
