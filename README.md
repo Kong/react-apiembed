@@ -98,6 +98,7 @@ render(<MyApp />, document.getElementById("root"))
 | prismLanguage |    ✔     |         | String | Prism languages. See above for supported languages.                              |
 | target        |    ✔     |         | String | [httpsnippet][httpsnippet] `target` prop e.g. "node", "javascript", "shell", "go" etc. |
 | client        |          | `null`  | String | [httpsnippet][httpsnippet] `client` prop. e.g. "xhr", "curl" etc.                      |
+| label         |          | `null`  | String | Override the tab label.                                                                |
 
 ## Testing
 
