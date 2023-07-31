@@ -123,4 +123,22 @@ storiesOf("CodeSnippetWidget", module).add("one language", () => (
       },
     ]}
   />
+)).add("tabs with labels", () => (
+  <CodeSnippetWidget
+    har={exampleHAR}
+    snippets={[
+      {
+        prismLanguage: "javascript",
+        target: "javascript",
+        client: "jquery",
+        label: "JavaScript (jQuery)"
+      },
+      {
+        prismLanguage: "bash",
+        target: "shell",
+        client: "curl",
+        label: "cURL"
+      },
+    ]}
+  />
 ))

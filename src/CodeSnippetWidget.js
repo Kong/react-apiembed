@@ -78,7 +78,7 @@ export default class CodeSnippetWidget extends React.Component {
     let targetIndex = index
     const lastIndex = this.props.snippets.length - 1
 
-    
+
     if (key === "Tab" && !event.shiftKey) {
       if (index !== lastIndex) {
         event.preventDefault()
@@ -128,8 +128,9 @@ export default class CodeSnippetWidget extends React.Component {
                     className="tabs-component-tab-a"
                     id={harKey + index}
                   >
-                    {snippet.target}
-                    {snippet.client && snippet.showClientInTab && ` - ${snippet.client}`}
+                    {snippet.label}
+                    {!snippet.label && snippet.target}
+                    {!snippet.label && snippet.client && snippet.showClientInTab && ` - ${snippet.client}`}
                   </a>
                 </li>
               )
@@ -142,7 +143,7 @@ export default class CodeSnippetWidget extends React.Component {
                 const snippetKey = this.getSnippetKey(snippet)
 
                 return (
-                  <section 
+                  <section
                     hidden={!activeTab}
                     role="tabpanel"
                     id={`${snippetKey + harKey}`}
