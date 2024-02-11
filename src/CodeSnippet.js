@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Prism from 'prismjs'
-import HTTPSnippet from 'httpsnippet'
+import { HTTPSnippet } from 'httpsnippet'
 
 
 export default class CodeSnippet extends React.Component {
