@@ -19,7 +19,7 @@
   "dependencies": {
     "babel-plugin-prismjs": "^2.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "httpsnippet": "https://github.com/AlsoAsked/httpsnippet.git#bdb4a9fa448fa32263a51ebe1aed264a85305271",
+    "httpsnippet": "https://github.com/AlsoAsked/httpsnippet.git#ce2f8ac3aa15b5610f0076331f5d5ff70e4e660b",
     "prismjs": "^1.29.0",
     "prop-types": "^15.6.1",
     "react": "^16.8.0",

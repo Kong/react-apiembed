@@ -7457,9 +7457,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"httpsnippet@https://github.com/AlsoAsked/httpsnippet.git#bdb4a9fa448fa32263a51ebe1aed264a85305271":
+"httpsnippet@https://github.com/AlsoAsked/httpsnippet.git#ce2f8ac3aa15b5610f0076331f5d5ff70e4e660b":
   version: 3.0.1
-  resolution: "httpsnippet@git+ssh://git@github.com/AlsoAsked/httpsnippet.git#commit=bdb4a9fa448fa32263a51ebe1aed264a85305271"
+  resolution: "httpsnippet@https://github.com/AlsoAsked/httpsnippet.git#commit=ce2f8ac3aa15b5610f0076331f5d5ff70e4e660b"
   dependencies:
     chalk: ^4.1.2
     form-data: 4.0.0
@@ -7468,7 +7468,7 @@ __metadata:
     yargs: ^17.4.0
   bin:
     httpsnippet: bin/httpsnippet
-  checksum: f285d1fdd630071423e070e0b0a197a343de6ec24859aaee698703f054956f21ee6f1ac5ee953554110ff317ac78191fd4f7e534d25ec865e3ef52e3b5d18a7d
+  checksum: 784c25513f52d472f349854fd4fe1e001e00e00823d339226a0a49a8d0d9096d305e2014a051bcabe94ee1e067ad7e7d0b0e5b74d72068e4cb00af81e31c279c
   languageName: node
   linkType: hard
 
@@ -10565,7 +10565,7 @@ __metadata:
     "@storybook/react": 6.5.9
     babel-plugin-prismjs: ^2.1.0
     babel-plugin-transform-class-properties: ^6.24.1
-    httpsnippet: "https://github.com/AlsoAsked/httpsnippet.git#bdb4a9fa448fa32263a51ebe1aed264a85305271"
+    httpsnippet: "https://github.com/AlsoAsked/httpsnippet.git#ce2f8ac3aa15b5610f0076331f5d5ff70e4e660b"
     prismjs: ^1.29.0
     prop-types: ^15.6.1
     react: ^16.8.0
